@@ -154,14 +154,14 @@ const mutations = {
 	enableDisableUser(state, { userid, enabled }) {
 		const user = state.users.find(user => user.id === userid)
 		user.enabled = enabled
-		// this.commit('updateUserCounts', { user, actionType: enabled ? 'enable' : 'disable' })
-		this.commit('updateUserCounts', { user, actionType: 'update' })
+		this.commit('updateUserCounts', { user, actionType: enabled ? 'enable' : 'disable' })
 	},
 	// update active/disabled counts, groups counts
 	updateUserCounts(state, { user, actionType }) {
 		const disabledGroup = state.groups.find(group => group.id === 'disabled')
 		switch (actionType) {
-		case 'update':
+		case 'enable':
+		case 'disable':
 			disabledGroup.usercount += user.enabled ? -1 : 1 // update Disabled Users count
 			state.userCount += user.enabled ? 1 : -1 // update Active Users count
 			user.groups.forEach(userGroup => {
